@@ -62,8 +62,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\DestroyGameObject.cs" />
     <Compile Include="Assets\Scripts\GameMaster.cs" />
     <Compile Include="Assets\Scripts\GridControl.cs" />
+    <Compile Include="Assets\Scripts\GridObjectControler.cs" />
+    <Compile Include="Assets\Scripts\GridObjectShellControl.cs" />
     <Compile Include="Assets\Scripts\GridObjects.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Unity Projects/Minesweeper Unity-Edition/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>

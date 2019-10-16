@@ -10,8 +10,9 @@ public class Tile
     public bool isBomb { get; set; }
     public int neighboringBombs { get; set; }
     public bool isOpen { get; set; }
+    public bool isFlaged { get; set; }
 
-    public Tile(int id, int posX, int posY, bool isBomb, int neighboringBombs, bool isOpen)
+    public Tile(int id, int posX, int posY, bool isBomb, int neighboringBombs, bool isOpen, bool isFlaged)
     {
         this.id = id;
         this.x = posX;
@@ -19,5 +20,6 @@ public class Tile
         this.isBomb = isBomb;
         this.neighboringBombs = neighboringBombs;
         this.isOpen = isOpen;
+        this.isFlaged = isFlaged;
     }
 }
