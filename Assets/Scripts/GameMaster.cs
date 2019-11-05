@@ -8,6 +8,8 @@ public class GameMaster : MonoBehaviour
     public int[] currentGridSize = new int[2] { 10, 10 };
     public int bombs = 0;
 
+    private bool admin = true;
+
     public GridControl gridControl;
 
     // Start is called before the first frame update
@@ -21,6 +23,14 @@ public class GameMaster : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (admin)
+        {
+            if (Input.GetKeyDown("c"))
+            {
+                gridControl.clearShells();
+            }
+        }
 
     }
 }

@@ -23,190 +23,199 @@ public class GridControl
 
         int gridCells = width * height;
         int currentGridCellID = 0;
-        gridObjects = new GameObject[height, width];
+        gridObjects = new GameObject[width, height];
         int[] bombPos = new int[bombs];
-        Tiles = new Tile[height, width];
+        Tiles = new Tile[width, height];
+        bool isDifferent = false;
 
         for (int i = 0; i < bombPos.Length; i++)
         {
             bombPos[i] = Random.Range(0,gridCells);
+            Debug.Log(bombPos[i]);
         }
 
-
-        while (currentGridCellID < gridCells)
+        /*
+        for (int i = 0; i < bombPos.Length; i++)
         {
-            for (int i = 0; i < height; i++)
+
+        }
+        */
+
+        while (isDifferent)
+        {
+
+        }
+
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
             {
-                for (int j = 0; j < width; j++)
+                bool isBomb = false;
+
+                foreach (int id in bombPos)
                 {
-                    currentGridCellID++;
-                    bool isBomb = false;
-
-                    foreach (var item in bombPos)
+                    if (currentGridCellID == id)
                     {
-                        
-                        if (currentGridCellID == item)
+                        isBomb = true;
+                    }
+                }
+
+                Tiles[i, j] = new Tile(currentGridCellID, i, j, isBomb, 0, false, false);
+
+                currentGridCellID += 1;
+            }
+        }
+
+        foreach (int id in bombPos)
+        {
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    if ( Tiles[i,j].id == id )
+                    {
+                        for (int k = 0; k < 8; k++)
                         {
-                            isBomb = true;    
-                            break;
+                            switch (k)
+                            {
+                                case 0:
+                                    try
+                                    {
+                                        Tiles[i - 1, j - 1].neighboringBombs += 1;
+                                    }
+                                    catch
+                                    {
+                                        Debug.LogWarning($"Can't add neighboringBombsCount - Tile dose not exist at {i-1}:{j-1}");
+                                    }
+                                    break;
+
+                                case 1:
+                                    try
+                                    {
+                                        Tiles[i, j - 1].neighboringBombs += 1;
+                                    }
+                                    catch
+                                    {
+                                        Debug.LogWarning($"Can't add neighboringBombsCount - Tile dose not exist at {i}:{j - 1}");
+                                    }
+                                    break;
+
+                                case 2:
+                                    try
+                                    {
+                                        Tiles[i + 1, j - 1].neighboringBombs += 1;
+                                    }
+                                    catch
+                                    {
+                                        Debug.LogWarning($"Can't add neighboringBombsCount - Tile dose not exist at {i + 1}:{j - 1}");
+                                    }
+                                    break;
+
+                                case 3:
+                                    try
+                                    {
+                                        Tiles[i - 1, j].neighboringBombs += 1;
+                                    }
+                                    catch
+                                    {
+                                        Debug.LogWarning($"Can't add neighboringBombsCount - Tile dose not exist at {i - 1}:{j}");
+                                    }
+                                    break;
+
+                                case 4:
+                                    try
+                                    {
+                                        Tiles[i + 1, j].neighboringBombs += 1;
+                                    }
+                                    catch
+                                    {
+                                        Debug.LogWarning($"Can't add neighboringBombsCount - Tile dose not exist at {i + 1}:{j}");
+                                    }
+                                    break;
+
+                                case 5:
+                                    try
+                                    {
+                                        Tiles[i - 1, j + 1].neighboringBombs += 1;
+                                    }
+                                    catch
+                                    {
+                                        Debug.LogWarning($"Can't add neighboringBombsCount - Tile dose not exist at {i - 1}:{j + 1}");
+                                    }
+                                    break;
+
+                                case 6:
+                                    try
+                                    {
+                                        Tiles[i, j + 1].neighboringBombs += 1;
+                                    }
+                                    catch
+                                    {
+                                        Debug.LogWarning($"Can't add neighboringBombsCount - Tile dose not exist at {i}:{j + 1}");
+                                    }
+                                    break;
+
+                                case 7:
+                                    try
+                                    {
+                                        Tiles[i + 1, j + 1].neighboringBombs += 1;
+                                    }
+                                    catch
+                                    {
+                                        Debug.LogWarning($"Can't add neighboringBombsCount - Tile dose not exist at {i + 1}:{j + 1}");
+                                    }
+                                    break;
+                            }
                         }
-                        else
-                        {
-                            isBomb = false;
-                        }
-                    } 
-
-
-
-                    Tiles[i, j] = new Tile(currentGridCellID,i,j,isBomb,0,false,false);
-
-                    GameObject OB = Object.Instantiate(GridGameObjects, new Vector3(i, 0, j), Quaternion.Euler(0, 0, 0));
-                    OB.name = ("GridObject " + currentGridCellID + ":" + i + ":" + j);
-                    OB.transform.parent = grid.transform;
-
-                    gridObjects[i, j] = OB;
-
-                    OB.GetComponent<GridObjectControler>().myTile = Tiles[i, j];
-
-                    Debug.Log($"Tile Created!\nGameObject : {OB.name}\nID : {Tiles[i, j].id}\nX Pos : {Tiles[i, j].x}\nY Pos : {Tiles[i, j].y}\nisBomb : {Tiles[i, j].isBomb}\nNeighboringBombs : {Tiles[i, j].neighboringBombs}\nisOpen : {Tiles[i, j].isOpen}\nisFlaged : {Tiles[i, j].isFlaged}");
-
+                    }
                 }
             }
         }
 
-        int neighboringBombs = 0;
-        for (int i = 0; i < height; i++)
+        foreach (var item in Tiles)
         {
-            for (int j = 0; j < width; j++)
-            {
-                for (int l = 0; l < 8; l++)
-                {
-                    int xPos = 0;
-                    int yPos = 0;
-                    switch (l)
-                    {
-                        case 0:
-                            xPos = i - 1;
-                            yPos = j - 1;
-                            break;
-
-                        case 1:
-                            xPos = i - 1;
-                            yPos = j;
-                            break;
-
-                        case 2:
-                            xPos = i - 1;
-                            yPos = j + 1;
-                            break;
-
-                        case 3:
-                            xPos = i;
-                            yPos = j - 1;
-                            break;
-
-                        case 4:
-                            xPos = i;
-                            yPos = j + 1;
-                            break;
-
-                        case 5:
-                            xPos = i + 1;
-                            yPos = j - 1;
-                            break;
-
-                        case 6:
-                            xPos = i + 1;
-                            yPos = j;
-                            break;
-
-                        case 7:
-                            xPos = i + 1;
-                            yPos = j + 1;
-                            break;
-                    }
-
-                    try
-                    {
-                        if (Tiles[xPos, yPos].isBomb == true)
-                        {
-                            neighboringBombs++;
-                        }
-                    }
-                    catch
-                    {
-                        Debug.LogWarning($"Can't check Tile at : {xPos}:{yPos}\nTile doesn't exist!");
-                    }
-                }
-                Tiles[i, j].neighboringBombs = neighboringBombs;
-                //Debug.Log($"ID : {Tiles[i,j].id}\nneighboringBombs : {Tiles[i, j].neighboringBombs}");
-                neighboringBombs = 0;
-            }
+            Debug.Log($"{item.id}\n{item.x}\n{item.y}\n{item.isBomb}\n{item.neighboringBombs}\n{item.isOpen}\n{item.isFlaged}");
         }
 
-        for (int i = 0; i < height; i++)
+        for (int i = 0; i < width; i++)
         {
-            for (int j = 0; j < width; j++)
+            for (int j = 0; j < height; j++)
             {
-                gridObjects[i, j].GetComponent<GridObjectControler>().myTile = Tiles[i, j];
-                gridObjects[i, j].GetComponent<GridObjectControler>().UpdateVisual();
+                GameObject GO = Object.Instantiate(GridGameObjects,new Vector3( i + ( 1 / 4 ), 0, j + ( 1 /  4 ) ), Quaternion.Euler(0,0,0));
+                GO.name = ("GridObject " +  i + ":" + j);
+                GO.transform.parent = grid.transform;
+
+                GO.GetComponent<GridObjectControler>().myTile = Tiles[i, j];
+                GO.GetComponent<GridObjectControler>().UpdateVisual();
+                gridObjects[i, j] = GO;
+
+                Debug.Log($"Tile Created!\nGameObject : {GO.name}\nID : {Tiles[i, j].id}\nX Pos : {Tiles[i, j].x}\nY Pos : {Tiles[i, j].y}\nisBomb : {Tiles[i, j].isBomb}\nNeighboringBombs : {Tiles[i, j].neighboringBombs}\nisOpen : {Tiles[i, j].isOpen}\nisFlaged : {Tiles[i, j].isFlaged}");
+
             }
         }
+        
     }
 
-
-    public void checkNeighboringTiles(int xPos, int yPos)
+    public void clearShells()
     {
-        for (int i = 0; i < 4; i++)
+        int items = 0;
+        for (int i = 0; i < width; i++)
         {
-            int LxPos = 0;
-            int LyPos = 0;
-            switch (i)
+            for (int j = 0; j < height; j++)
             {
-                case 0:
-                    LxPos = xPos;
-                    LyPos = yPos - 1;
-                    break;
-
-                case 1:
-                    LxPos = xPos - 1;
-                    LyPos = yPos;
-                    break;
-
-                case 2:
-                    LxPos = xPos + 1;
-                    LyPos = yPos;
-                    break;
-
-                case 3:
-                    LxPos = xPos;
-                    LyPos = yPos + 1;
-                    break;
-            }
-
-            try
-            {
-                if (
-                    !gridObjects[LxPos, LyPos].GetComponent<GridObjectControler>().myTile.isBomb &&
-                    !gridObjects[LxPos, LyPos].GetComponent<GridObjectControler>().myTile.isOpen &&
-                    !gridObjects[LxPos, LyPos].GetComponent<GridObjectControler>().myTile.isFlaged
-                    )
+                try
                 {
-                    if ( gridObjects[LxPos, LyPos].GetComponent<GridObjectControler>().myTile.neighboringBombs == 0 )
-                    {
-                        gridObjects[LxPos, LyPos].transform.Find("Shell").GetComponent<GridObjectShellControl>().open(true);
-                    }
-                    else
-                    {
-                        gridObjects[LxPos, LyPos].transform.Find("Shell").GetComponent<GridObjectShellControl>().open(false);
-                    }
-                    
+                    gridObjects[i, j].GetComponent<GridObjectControler>().myTile.isOpen = true;
+                    gridObjects[i, j].transform.Find("Shell").GetComponent<DestroyGameObject>().DestroyObject();
+                    items++;
+                }
+                catch
+                {
+
                 }
             }
-            catch
-            {
-                Debug.LogWarning($"Can't open Tile at : {LxPos}:{LyPos}\nTile doesn't exist!");
-            }
+            
         }
-    }
+            Debug.Log($"{items} items has been cleard!");
+        }
 }

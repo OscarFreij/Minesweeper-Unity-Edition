@@ -8,14 +8,68 @@ public class GridObjectControler : MonoBehaviour
 {
 
     public Tile myTile { get; set; }
+    private Color baseColor { get; set; }
+    private Color startColor { get; set; }
+    private GameObject shell { get; set; }
+    private GridControl gridControl { get; set; }
 
-    // Start is called before the first frame update
-    void Start()
+
+    private void Start()
     {
+        shell = transform.Find("Shell").gameObject;
+
+        baseColor = shell.GetComponentInChildren<Renderer>().material.color;
+        startColor = shell.GetComponentInChildren<Renderer>().material.color;
+
+        gridControl = GameObject.Find("GameMaster").GetComponent<GameMaster>().gridControl;
+    }
+
+    public void Open()
+    {
+        if (!myTile.isOpen)
+        {
+            if (!myTile.isFlaged)
+            {
+                myTile.isOpen = true;
+                shell.GetComponent<DestroyGameObject>().DestroyObject();
+
+                if (myTile.isBomb)
+                {
+                    //Trigger GameOver!
+                    Debug.Log($"GameOver {transform.name} - Tile tripped a bomb");
+                }
+            }
+            else
+            {
+                Debug.Log($"Can't open {transform.name} - Tile is flagged");
+            }
+        }
+    }
+
+    public void Flag()
+    {
+        if (true)
+        {
+            if (!myTile.isFlaged)
+            {
+                myTile.isFlaged = true;
+                shell.GetComponentInChildren<Renderer>().material.color = Color.green;
+                startColor = shell.GetComponentInChildren<Renderer>().material.color;
+                Debug.Log(transform.name + " has been flaged!");
+            }
+            else
+            {
+                myTile.isFlaged = false;
+                startColor = baseColor;
+                shell.GetComponentInChildren<Renderer>().material.color = Color.yellow;
+                Debug.Log(transform.name + " has been unflaged!");
+            }
+        }
     }
 
     public void UpdateVisual()
     {
+        Text number = transform.Find("Canvas").GetComponentInChildren<Text>();
         if (myTile.isBomb)
         {
             transform.Find("Canvas").GetComponent<DestroyGameObject>().DestroyObject();
@@ -24,7 +78,51 @@ public class GridObjectControler : MonoBehaviour
         {
             if (myTile.neighboringBombs != 0)
             {
-                transform.Find("Canvas").GetComponentInChildren<Text>().text = myTile.neighboringBombs.ToString();
+                number.text = myTile.neighboringBombs.ToString();
+                
+                switch (myTile.neighboringBombs)
+                {
+                    case 1:
+                        // 1 bomb = blue
+                        number.color = Color.blue;
+                        break;
+
+                    case 2:
+                        // 2 bomb = green
+                        number.color = Color.green;
+                        break;
+
+                    case 3:
+                        // 3 bomb = red
+                        number.color = Color.red;
+                        break;
+
+                    case 4:
+                        // 4 bomb = purple
+                        number.color = new Color(128, 0, 128);
+                        break;
+
+                    case 5:
+                        // 5 bomb = black
+                        number.color = Color.black;
+                        break;
+
+                    case 6:
+                        // 6 bomb = maroon
+                        number.color = new Color(128, 0, 0);
+                        break;
+
+                    case 7:
+                        // 7 bomb = gray
+                        number.color = Color.gray;
+                        break;
+
+                    case 8:
+                        // 8 bomb = turquoise
+                        number.color = new Color(64, 224, 208);
+                        break;
+
+                }
             }
             else
             {
@@ -32,6 +130,10 @@ public class GridObjectControler : MonoBehaviour
             }
             transform.Find("Bomb").GetComponent<DestroyGameObject>().DestroyObject();
         }
+
     }
 
 }
+
+
+
