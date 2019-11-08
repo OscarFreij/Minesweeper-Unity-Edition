@@ -26,7 +26,6 @@ public class GridControl
         gridObjects = new GameObject[width, height];
         int[] bombPos = new int[bombs];
         Tiles = new Tile[width, height];
-        bool isDifferent = false;
 
         for (int i = 0; i < bombPos.Length; i++)
         {
@@ -35,17 +34,22 @@ public class GridControl
         }
 
         /*
+        
         for (int i = 0; i < bombPos.Length; i++)
         {
-
+            for(int j = 0; j < bombPos.Length; j++)
+            {
+                
+            }
         }
-        */
 
-        while (isDifferent)
+        bool checkIfDifferent(int currentPos, int checkPos)
         {
 
+            return true;
         }
 
+        */
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
@@ -195,6 +199,7 @@ public class GridControl
         }
         
     }
+
 
     public void clearShells()
     {
