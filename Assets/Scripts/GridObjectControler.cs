@@ -31,6 +31,7 @@ public class GridObjectControler : MonoBehaviour
             if (!myTile.isFlaged)
             {
                 myTile.isOpen = true;
+                gridControl.openTileAmount++;
                 shell.GetComponent<DestroyGameObject>().DestroyObject();
 
                 if (myTile.isBomb)

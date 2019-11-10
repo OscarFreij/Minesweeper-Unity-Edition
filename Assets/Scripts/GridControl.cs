@@ -6,6 +6,7 @@ public class GridControl
 {
     public GameObject grid;
     public int gridCells = 0;
+    public int openTileAmount = 0;
 
     public Tile[,] Tiles;
 
@@ -24,32 +25,51 @@ public class GridControl
         int gridCells = width * height;
         int currentGridCellID = 0;
         gridObjects = new GameObject[width, height];
-        int[] bombPos = new int[bombs];
+        List<int> bombPos = new List<int>();
         Tiles = new Tile[width, height];
 
-        for (int i = 0; i < bombPos.Length; i++)
+        for (int i = 0; i < bombs; i++)
         {
-            bombPos[i] = Random.Range(0,gridCells);
-            Debug.Log(bombPos[i]);
-        }
+            int tempPos = Random.Range(0, gridCells);
 
-        /*
-        
-        for (int i = 0; i < bombPos.Length; i++)
-        {
-            for(int j = 0; j < bombPos.Length; j++)
+            if (bombPos.Count == 0)
             {
-                
+                bombPos.Add(tempPos);
+                Debug.Log("First BombPos Set!");
+                Debug.Log($"BombPos Set! - Pos : {tempPos}");
             }
+            else
+            {
+                bool isConflicting = false;
+                do
+                {
+                    foreach (int pos in bombPos)
+                    {
+                        if (tempPos == pos)
+                        {
+                            Debug.Log("Rerolling BombPos - Conflicting positions!");
+                            tempPos = Random.Range(0, gridCells);
+                            isConflicting = true;
+                            break;
+                        }
+                        else
+                        {
+                            isConflicting = false;
+                        }
+                    }
+
+                } while (isConflicting);
+                Debug.Log($"BombPos Set! - Pos : {tempPos}");
+                bombPos.Add(tempPos);
+            }
+
         }
 
-        bool checkIfDifferent(int currentPos, int checkPos)
-        {
+        Debug.Log($"All BombPositions have been set!");
 
-            return true;
-        }
 
-        */
+
+
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
@@ -176,10 +196,12 @@ public class GridControl
             }
         }
 
+        /*
         foreach (var item in Tiles)
         {
             Debug.Log($"{item.id}\n{item.x}\n{item.y}\n{item.isBomb}\n{item.neighboringBombs}\n{item.isOpen}\n{item.isFlaged}");
         }
+        */
 
         for (int i = 0; i < width; i++)
         {
@@ -219,8 +241,7 @@ public class GridControl
 
                 }
             }
-            
         }
-            Debug.Log($"{items} items has been cleard!");
-        }
+         Debug.Log($"{items} items has been cleard!");
+     }
 }
