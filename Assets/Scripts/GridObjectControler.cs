@@ -39,6 +39,47 @@ public class GridObjectControler : MonoBehaviour
                     //Trigger GameOver!
                     Debug.Log($"GameOver {transform.name} - Tile tripped a bomb");
                 }
+
+                for (int i = 0; i < 4; i++)
+                {
+                    int xlook = 0;
+                    int ylook = 0;
+                    switch (i)
+                    {
+                        case 0:
+                            xlook = myTile.x;
+                            ylook = myTile.y - 1;
+                            break;
+
+                        case 1:
+                            xlook = myTile.x - 1;
+                            ylook = myTile.y;
+                            break;
+
+                        case 2:
+                            xlook = myTile.x + 1;
+                            ylook = myTile.y;
+                            break;
+
+                        case 3:
+                            xlook = myTile.x;
+                            ylook = myTile.y + 1;
+                            break;
+                    }
+
+                    try
+                    {
+                        if (!gridControl.gridObjects[xlook, ylook].GetComponent<GridObjectControler>().myTile.isFlaged && !gridControl.gridObjects[xlook, ylook].GetComponent<GridObjectControler>().myTile.isBomb)
+                        {
+                            gridControl.gridObjects[xlook, ylook].GetComponent<GridObjectControler>().Open();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
+                }
+
             }
             else
             {

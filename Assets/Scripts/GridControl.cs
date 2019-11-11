@@ -13,7 +13,7 @@ public class GridControl
     protected int height;
     protected int width;
 
-    protected GameObject[,] gridObjects;
+    public GameObject[,] gridObjects;
 
     public void CreateGrid(int width, int height, int bombs, GameObject GridGameObjects)
     {
