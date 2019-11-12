@@ -38,6 +38,7 @@ public class GridObjectControler : MonoBehaviour
                 {
                     //Trigger GameOver!
                     Debug.Log($"GameOver {transform.name} - Tile tripped a bomb");
+                    return;
                 }
 
                 for (int i = 0; i < 4; i++)
@@ -69,9 +70,31 @@ public class GridObjectControler : MonoBehaviour
 
                     try
                     {
-                        if (!gridControl.gridObjects[xlook, ylook].GetComponent<GridObjectControler>().myTile.isFlaged && !gridControl.gridObjects[xlook, ylook].GetComponent<GridObjectControler>().myTile.isBomb)
+                        if (
+                            !gridControl.gridObjects[xlook, ylook].GetComponent<GridObjectControler>().myTile.isFlaged &&
+                            !gridControl.gridObjects[xlook, ylook].GetComponent<GridObjectControler>().myTile.isBomb &&
+                            !gridControl.gridObjects[xlook, ylook].GetComponent<GridObjectControler>().myTile.isOpen
+                            )
                         {
-                            gridControl.gridObjects[xlook, ylook].GetComponent<GridObjectControler>().Open();
+
+                            if (myTile.neighboringBombs == 0)
+                            {
+                                gridControl.gridObjects[xlook, ylook].GetComponent<GridObjectControler>().Open();
+                            }
+                            else
+                            {
+                                if (gridControl.gridObjects[xlook, ylook].GetComponent<GridObjectControler>().myTile.neighboringBombs == 0)
+                                {
+                                    gridControl.gridObjects[xlook, ylook].GetComponent<GridObjectControler>().Open();
+                                }
+                            }
+
+                            /*
+                             * If myTile has number, only open numberles.
+                             * else
+                             * If myTile don't have a number, open all neighbors.
+                             */
+
                         }
                     }
                     catch (Exception e)
@@ -86,6 +109,10 @@ public class GridObjectControler : MonoBehaviour
                 Debug.Log($"Can't open {transform.name} - Tile is flagged");
             }
         }
+        else
+        {
+            Debug.Log($"Can't open {transform.name} - Tile is already open");
+        }
     }
 
     public void Flag()
@@ -96,13 +123,14 @@ public class GridObjectControler : MonoBehaviour
             {
                 myTile.isFlaged = true;
                 shell.GetComponentInChildren<Renderer>().material.color = Color.green;
+                shell.GetComponent<GridShellTrigger>().startColor = Color.green;
                 startColor = shell.GetComponentInChildren<Renderer>().material.color;
                 Debug.Log(transform.name + " has been flaged!");
             }
             else
             {
                 myTile.isFlaged = false;
-                startColor = baseColor;
+                shell.GetComponent<GridShellTrigger>().startColor = shell.GetComponent<GridShellTrigger>().baseColor;
                 shell.GetComponentInChildren<Renderer>().material.color = Color.yellow;
                 Debug.Log(transform.name + " has been unflaged!");
             }

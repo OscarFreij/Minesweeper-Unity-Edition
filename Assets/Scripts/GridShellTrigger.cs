@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class GridShellTrigger : MonoBehaviour
 {
-    private Color baseColor { get; set; }
-    private Color startColor { get; set; }
+    public Color baseColor { get; set; }
+    public Color startColor { get; set; }
     private GridObjectControler Controler { get; set; }
+
+    public bool acceptInput { get; set; } = true;
 
 
     private void Start()
@@ -19,7 +21,7 @@ public class GridShellTrigger : MonoBehaviour
 
     void OnMouseEnter()
     {
-        if (true)
+        if (acceptInput)
         {
             startColor = GetComponentInChildren<Renderer>().material.color;
             GetComponentInChildren<Renderer>().material.color = Color.yellow;
@@ -29,7 +31,7 @@ public class GridShellTrigger : MonoBehaviour
 
     void OnMouseExit()
     {
-        if (true)
+        if (acceptInput)
         {
             GetComponentInChildren<Renderer>().material.color = startColor;
             Debug.Log("Now hovering over new block!");
@@ -38,19 +40,22 @@ public class GridShellTrigger : MonoBehaviour
 
     void OnMouseOver()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (acceptInput)
         {
-            Debug.Log("Right Mouse Button Clicked on: " + transform.name);
-            Controler.Flag();
-        }
-        else if (Input.GetMouseButtonDown(0))
-        {
-            Debug.Log("Left Mouse Button Clicked on: " + transform.name);
-            Controler.Open();
-        }
-        else if (Input.GetMouseButtonDown(2))
-        {
-            Debug.Log($"GameObject : {transform.parent.name}\nID : {Controler.myTile.id}\nX Pos : {Controler.myTile.x}\nY Pos : {Controler.myTile.y}\nisBomb : {Controler.myTile.isBomb}\nNeighboringBombs : {Controler.myTile.neighboringBombs}\nisOpen : {Controler.myTile.isOpen}\nisFlaged : {Controler.myTile.isFlaged}");
+            if (Input.GetMouseButtonDown(1))
+            {
+                Debug.Log("Right Mouse Button Clicked on: " + transform.name);
+                Controler.Flag();
+            }
+            else if (Input.GetMouseButtonDown(0))
+            {
+                Debug.Log("Left Mouse Button Clicked on: " + transform.name);
+                Controler.Open();
+            }
+            else if (Input.GetMouseButtonDown(2))
+            {
+                Debug.Log($"GameObject : {transform.parent.name}\nID : {Controler.myTile.id}\nX Pos : {Controler.myTile.x}\nY Pos : {Controler.myTile.y}\nisBomb : {Controler.myTile.isBomb}\nNeighboringBombs : {Controler.myTile.neighboringBombs}\nisOpen : {Controler.myTile.isOpen}\nisFlaged : {Controler.myTile.isFlaged}");
+            }
         }
     }
 

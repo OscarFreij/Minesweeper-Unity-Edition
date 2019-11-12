@@ -219,7 +219,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GridGameObjects: {fileID: 2665635982541737855, guid: b7a6a642c9117fc46b2b57c317810ab7,
     type: 3}
-  currentGridSize: 0a0000000a000000
+  currentGridSize: 0f0000000f000000
   bombs: 16
 --- !u!4 &142493920
 Transform:
@@ -739,7 +739,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2052720992}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.3235235, y: -3.0601, z: 5.63413}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
