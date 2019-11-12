@@ -61,10 +61,12 @@ public class GameMaster : MonoBehaviour
 
     }
 
-    public void CenterCamera(int x, int y)
+    public void CenterCamera(float x, float y)
     {
 
-        int hight;
+        float hight;
+        float xPos = x;
+        float yPos = y;
 
         if (x >= y)
         {
@@ -75,7 +77,22 @@ public class GameMaster : MonoBehaviour
             hight = y;
         }
 
-        GameObject.Find("Main Camera").transform.position = new Vector3(x/2, hight, y/2);
+        xPos = x / 2;
+        yPos = y / 2;
+
+        
+        if (x % 2 == 1)
+        {
+            xPos -= 0.5f;
+        }
+
+        if (y % 2 == 1)
+        {
+            yPos -= 0.5f;
+        }
+
+
+        GameObject.Find("Main Camera").transform.position = new Vector3(xPos, hight, yPos);
 
     }
 }
