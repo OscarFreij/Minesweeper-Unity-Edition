@@ -42,14 +42,14 @@ public class GridObjectControler : MonoBehaviour
                     return;
                 }
 
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i < 8; i++)
                 {
                     int xlook = 0;
                     int ylook = 0;
                     switch (i)
                     {
                         case 0:
-                            xlook = myTile.x;
+                            xlook = myTile.x - 1;
                             ylook = myTile.y - 1;
                             break;
 
@@ -59,12 +59,32 @@ public class GridObjectControler : MonoBehaviour
                             break;
 
                         case 2:
-                            xlook = myTile.x + 1;
-                            ylook = myTile.y;
+                            xlook = myTile.x - 1;
+                            ylook = myTile.y + 1;
                             break;
 
                         case 3:
                             xlook = myTile.x;
+                            ylook = myTile.y - 1;
+                            break;
+
+                        case 4:
+                            xlook = myTile.x;
+                            ylook = myTile.y + 1;
+                            break;
+
+                        case 5:
+                            xlook = myTile.x + 1;
+                            ylook = myTile.y - 1;
+                            break;
+
+                        case 6:
+                            xlook = myTile.x + 1;
+                            ylook = myTile.y;
+                            break;
+
+                        case 7:
+                            xlook = myTile.x + 1;
                             ylook = myTile.y + 1;
                             break;
                     }
