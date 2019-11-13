@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ public class GameMaster : MonoBehaviour
     public GameObject GridGameObjects;
     public int[] currentGridSize = new int[2] { 10, 10 };
     public int bombs = 0;
+    public bool useAutoBombGen = false;
 
 
     private bool admin = true;
@@ -28,6 +30,20 @@ public class GameMaster : MonoBehaviour
             Debug.Log("GridGameObjects was succesfully loaded");
         }
 
+        if (useAutoBombGen)
+        {
+            float temp_1 = currentGridSize[0] * currentGridSize[1];
+            float temp_2 = 2f / 15f;
+            float temp_3 = temp_1 * temp_2;
+            Debug.Log($"Temp_1 : {temp_1} Temp_2 : {temp_2} Temp_3 : {temp_3}");
+            bombs = Mathf.RoundToInt(temp_3);
+
+            if ((temp_1 % 2 == 0 && bombs % 2 == 1) || (temp_1 % 2 == 1 && bombs % 2 == 0))
+            {
+                bombs++;
+            }
+        }
+
         gridControl = new GridControl();
         gridControl.CreateGrid(currentGridSize[0], currentGridSize[1], bombs, GridGameObjects);
         CenterCamera(currentGridSize[0], currentGridSize[1]);
@@ -40,6 +56,15 @@ public class GameMaster : MonoBehaviour
         foreach (Transform child in GameObject.Find("Grid").transform)
         {
             Destroy(child.gameObject);
+        }
+
+        if (useAutoBombGen)
+        {
+            float temp_1 = currentGridSize[0] * currentGridSize[1];
+            float temp_2 = 0.13f;
+            float temp_3 = temp_1 * temp_2;
+            Debug.Log($"Temp_1 : {temp_1} Temp_2 : {temp_2} Temp_3 : {temp_3}");
+            bombs = Mathf.RoundToInt(temp_3);
         }
 
         gridControl = new GridControl();
