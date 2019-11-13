@@ -8,8 +8,10 @@ public class GameMaster : MonoBehaviour
     public GameObject GridGameObjects;
     public int[] currentGridSize = new int[2] { 10, 10 };
     public int bombs = 0;
-    public bool useAutoBombGen = false;
 
+    [Range(0, 4)]
+    public int difficulty = 0;
+    
 
     private bool admin = true;
 
@@ -30,10 +32,32 @@ public class GameMaster : MonoBehaviour
             Debug.Log("GridGameObjects was succesfully loaded");
         }
 
-        if (useAutoBombGen)
+
+
+        if (difficulty != 0)
         {
-            float temp_1 = currentGridSize[0] * currentGridSize[1];
             float temp_2 = 2f / 15f;
+            switch (difficulty)
+            {
+                case 1:
+                    temp_2 = 0.1f;
+                    break;
+
+                case 2:
+                    temp_2 = 0.13f;
+                    break;
+
+                case 3:
+                    temp_2 = 0.16f;
+                    break;
+
+                case 4:
+                    temp_2 = 0.2f;
+                    break;
+            }
+
+            float temp_1 = currentGridSize[0] * currentGridSize[1];
+            
             float temp_3 = temp_1 * temp_2;
             Debug.Log($"Temp_1 : {temp_1} Temp_2 : {temp_2} Temp_3 : {temp_3}");
             bombs = Mathf.RoundToInt(temp_3);
@@ -58,10 +82,29 @@ public class GameMaster : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        if (useAutoBombGen)
+        if (difficulty != 0)
         {
+            float temp_2 = 2f / 15f;
+            switch (difficulty)
+            {
+                case 1:
+                    temp_2 = 0.08f;
+                    break;
+
+                case 2:
+                    temp_2 = 0.13f;
+                    break;
+
+                case 3:
+                    temp_2 = 0.16f;
+                    break;
+
+                case 4:
+                    temp_2 = 0.2f;
+                    break;
+            }
+
             float temp_1 = currentGridSize[0] * currentGridSize[1];
-            float temp_2 = 0.13f;
             float temp_3 = temp_1 * temp_2;
             Debug.Log($"Temp_1 : {temp_1} Temp_2 : {temp_2} Temp_3 : {temp_3}");
             bombs = Mathf.RoundToInt(temp_3);

@@ -220,7 +220,7 @@ MonoBehaviour:
   GridGameObjects: {fileID: 0}
   currentGridSize: 0f0000000f000000
   bombs: 30
-  useAutoBombGen: 0
+  difficulty: 0
 --- !u!4 &142493920
 Transform:
   m_ObjectHideFlags: 0
