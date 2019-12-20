@@ -69,6 +69,8 @@
     <Compile Include="Assets\Resources\Scripts\GridObjectControler.cs" />
     <Compile Include="Assets\Resources\Scripts\GridObjects.cs" />
     <Compile Include="Assets\Resources\Scripts\GridShellTrigger.cs" />
+    <Compile Include="Assets\Resources\Scripts\MainMenu_ObjectDisplay.cs" />
+    <Compile Include="Assets\Resources\Scripts\SoundControler.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Unity Projects/Minesweeper Unity-Edition/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

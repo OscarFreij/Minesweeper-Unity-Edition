@@ -143,8 +143,8 @@ public class GridObjectControler : MonoBehaviour
             if (!myTile.isFlaged)
             {
                 myTile.isFlaged = true;
-                shell.GetComponentInChildren<Renderer>().material.color = Color.green;
-                shell.GetComponent<GridShellTrigger>().startColor = Color.green;
+                shell.GetComponentInChildren<Renderer>().material.color = Color.green * 0.8f;
+                shell.GetComponent<GridShellTrigger>().startColor = Color.green * 0.8f;
                 startColor = shell.GetComponentInChildren<Renderer>().material.color;
                 Debug.Log(transform.name + " has been flaged!");
             }
@@ -152,7 +152,7 @@ public class GridObjectControler : MonoBehaviour
             {
                 myTile.isFlaged = false;
                 shell.GetComponent<GridShellTrigger>().startColor = shell.GetComponent<GridShellTrigger>().baseColor;
-                shell.GetComponentInChildren<Renderer>().material.color = Color.yellow;
+                shell.GetComponentInChildren<Renderer>().material.color = Color.yellow * 0.8f;
                 Debug.Log(transform.name + " has been unflaged!");
             }
         }
@@ -175,42 +175,42 @@ public class GridObjectControler : MonoBehaviour
                 {
                     case 1:
                         // 1 bomb = blue
-                        number.color = Color.blue;
+                        number.color = Color.blue * 0.8f;
                         break;
 
                     case 2:
                         // 2 bomb = green
-                        number.color = Color.green;
+                        number.color = Color.green * 0.8f;
                         break;
 
                     case 3:
                         // 3 bomb = red
-                        number.color = Color.red;
+                        number.color = Color.red * 0.8f;
                         break;
 
                     case 4:
                         // 4 bomb = purple
-                        number.color = new Color(128, 0, 128);
+                        number.color = new Color(128, 0, 128) * 0.8f;
                         break;
 
                     case 5:
                         // 5 bomb = black
-                        number.color = Color.black;
+                        number.color = Color.black * 0.8f;
                         break;
 
                     case 6:
                         // 6 bomb = maroon
-                        number.color = new Color(128, 0, 0);
+                        number.color = new Color(128, 0, 0) * 0.8f;
                         break;
 
                     case 7:
                         // 7 bomb = gray
-                        number.color = Color.gray;
+                        number.color = Color.gray * 0.8f;
                         break;
 
                     case 8:
                         // 8 bomb = turquoise
-                        number.color = new Color(64, 224, 208);
+                        number.color = new Color(64, 224, 208) * 0.8f;
                         break;
 
                 }
